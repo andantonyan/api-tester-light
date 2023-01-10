@@ -6,6 +6,6 @@ import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 @Test
-@Guice(modules = {GithubModule.class, CommonModule.class})
+@Guice(modules = {CommonModule.class, GithubModule.class})
 public abstract class AbstractGithubTest {
 }
