@@ -7,8 +7,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class FeignInterceptorDecorator implements RequestInterceptor {
-
+public class FeignInterceptorManager implements RequestInterceptor {
     private final Set<RequestInterceptor> interceptors = Collections.synchronizedSet(new HashSet<>());
 
     public void add(final RequestInterceptor interceptor) {

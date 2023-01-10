@@ -1,6 +1,6 @@
 package com.andantonyan.apitester.github.contributor;
 
-import com.andantonyan.apitester.common.FeignInterceptorDecorator;
+import com.andantonyan.apitester.common.FeignInterceptorManager;
 import com.andantonyan.apitester.github.client.GitHubClient;
 import com.andantonyan.apitester.github.common.AbstractGithubTest;
 import com.andantonyan.apitester.github.model.Contributor;
@@ -23,19 +23,19 @@ public class ContributorsGetTest extends AbstractGithubTest {
     private Randomizer randomizer;
 
     @Inject
-    private FeignInterceptorDecorator feignInterceptorDecorator;
+    private FeignInterceptorManager feignInterceptorManager;
 
     @Inject
     private GitHubClient gitHubClient;
 
     @BeforeMethod
     public void setUp() {
-        feignInterceptorDecorator.add(tpl -> tpl.header("authorization", randomizer.string()));
+        feignInterceptorManager.add(tpl -> tpl.header("authorization", randomizer.string()));
     }
 
     @AfterMethod
     public void tearDown() {
-        feignInterceptorDecorator.clear();
+        feignInterceptorManager.clear();
     }
 
     @Test

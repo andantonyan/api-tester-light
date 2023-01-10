@@ -1,7 +1,7 @@
 package com.andantonyan.apitester.github.common;
 
 import com.andantonyan.apitester.common.ConfigurationService;
-import com.andantonyan.apitester.common.FeignInterceptorDecorator;
+import com.andantonyan.apitester.common.FeignInterceptorManager;
 import com.andantonyan.apitester.github.client.GitHubClient;
 import com.google.inject.AbstractModule;
 import feign.Feign;
@@ -15,12 +15,12 @@ public class GithubModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        final FeignInterceptorDecorator feignInterceptorDecorator = new FeignInterceptorDecorator();
+        final FeignInterceptorManager feignInterceptorManager = new FeignInterceptorManager();
         final GitHubClient github = Feign.builder()
-                .requestInterceptor(feignInterceptorDecorator)
+                .requestInterceptor(feignInterceptorManager)
                 .decoder(new GsonDecoder())
                 .target(GitHubClient.class, (String) configurationService.getRaw("github.url"));
-        bind(FeignInterceptorDecorator.class).toInstance(feignInterceptorDecorator);
+        bind(FeignInterceptorManager.class).toInstance(feignInterceptorManager);
         bind(GitHubClient.class).toInstance(github);
     }
 }
