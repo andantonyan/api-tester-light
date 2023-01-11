@@ -11,6 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,6 +20,10 @@ import static org.hamcrest.Matchers.notNullValue;
 
 @Log
 public class ContributorsGetTest extends AbstractGithubTest {
+    @Inject
+    @Named("example.value")
+    String exampleValue;
+
     @Inject
     private Randomizer randomizer;
 
