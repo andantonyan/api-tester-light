@@ -1,6 +1,6 @@
 package com.andantonyan.apitester.github.contributor;
 
-import com.andantonyan.apitester.common.FeignInterceptorManager;
+import com.andantonyan.apitester.common.client.InterceptorManager;
 import com.andantonyan.apitester.github.client.GitHubClient;
 import com.andantonyan.apitester.github.common.AbstractGithubTest;
 import com.andantonyan.apitester.github.model.Contributor;
@@ -21,31 +21,35 @@ import static org.hamcrest.Matchers.notNullValue;
 @Log
 public class ContributorsGetTest extends AbstractGithubTest {
     @Inject
-    @Named("example.value")
-    String exampleValue;
+    @Named("github.test.owner")
+    private String githubTestOwner;
+
+    @Inject
+    @Named("github.test.repo")
+    private String githubTestRepo;
 
     @Inject
     private Randomizer randomizer;
 
     @Inject
-    private FeignInterceptorManager feignInterceptorManager;
+    private InterceptorManager interceptorManager;
 
     @Inject
     private GitHubClient gitHubClient;
 
     @BeforeMethod
     public void setUp() {
-        feignInterceptorManager.add(tpl -> tpl.header("authorization", randomizer.string()));
+        interceptorManager.add(tpl -> tpl.header("authorization", randomizer.string()));
     }
 
     @AfterMethod
     public void tearDown() {
-        feignInterceptorManager.clear();
+        interceptorManager.clear();
     }
 
     @Test
     public void shouldGetContributorsList() {
-        List<Contributor> contributors = gitHubClient.contributors("OpenFeign", "feign");
+        List<Contributor> contributors = gitHubClient.contributors(githubTestOwner, githubTestRepo);
         assertThat(contributors, notNullValue());
         assertThat(contributors, isA(List.class));
     }
