@@ -22,10 +22,10 @@ public class GithubModule extends AbstractModule {
     private ApiClient getApiClient(
             final ObjectMapper objectMapper,
             final InterceptorManager interceptorManager,
-            @Named("github.url") final String communicationsUrl
+            @Named("github.url") final String githubUrl
     ) {
         final ApiClient apiClient = new ApiClient(objectMapper);
-        apiClient.setBasePath(communicationsUrl);
+        apiClient.setBasePath(githubUrl);
         apiClient.getFeignBuilder().requestInterceptor(interceptorManager);
         return apiClient;
     }
